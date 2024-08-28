@@ -13,10 +13,16 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - name: Checkout code
+    - name: Checkout workflow files
       uses: actions/checkout@v2
       with:
         fetch-depth: 1
+
+    - name: Clone SwiftShader repository
+      run: git clone --recursive https://swiftshader.googlesource.com/SwiftShader D:/a/build-vulkan/swiftshader
+
+    - name: List files in SwiftShader directory
+      run: dir D:/a/build-vulkan/swiftshader
 
     - name: Install CMake
       run: choco install cmake --installargs 'ADD_CMAKE_TO_PATH=System' --yes
@@ -26,14 +32,14 @@ jobs:
       with:
         arch: x64
 
-    - name: List files in root
-      run: dir
-
     - name: Configure project
-      run: cmake -B build -S .
+      run: cmake -B build -S D:/a/build-vulkan/swiftshader
 
     - name: Build SwiftShader
       run: cmake --build build --parallel
+
+      - name: List files in SwiftShader directory
+      run: dir
 
     - name: Upload build artifacts
       uses: actions/upload-artifact@v3

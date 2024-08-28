@@ -38,7 +38,7 @@ jobs:
     - name: Build SwiftShader
       run: cmake --build build --parallel
 
-      - name: List files in SwiftShader directory
+    - name: List files in SwiftShader directory
       run: dir
 
     - name: Upload build artifacts
